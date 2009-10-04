@@ -74,9 +74,12 @@ class NetworkDevice(object):
             raise AttributeError(prop)
 
     def getSsid(self):
-        ap = NetworkDevice(self.get("ActiveAccessPoint"))
-        return ''.join((chr(x) for x in list(ap.get("Ssid"))))
-
+        try:
+            ap = NetworkDevice(self.get("ActiveAccessPoint"))
+            return ''.join((chr(x) for x in list(ap.get("Ssid"))))
+        except:
+            pass #We didn't have one
+        return ""
         
 def main():
     nmdispatch = pwd.getpwuid(os.getuid())[5]+"/.nmdispatch/"
